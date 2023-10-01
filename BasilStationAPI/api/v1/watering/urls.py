@@ -2,6 +2,6 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path("", views.get_all_waterings),
-    path("<int:watering_id>", views.get_watering),
+    path("", views.watering),
+    path("<int:watering_id>", views.watering_by_id),
 ]

@@ -1,34 +1,32 @@
 from django.shortcuts import render
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound,HttpResponseBadRequest
 from django.core.exceptions import ObjectDoesNotExist
 
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework.decorators import api_view
+
 from base.models import Watered
 from .serializers import WateredSerializer
 
+from .sevice import handle_get_watering, handle_get_watering_by_id, handle_post_watering
+
+import json
 # Create your views here.
 
-#get all waterings
-@api_view(['GET'])
-def get_all_waterings(request):
-    if request.GET.get('limit'):
-        limit = int(request.GET.get('limit'))
-        waterings = Watered.objects.order_by('-id')[:limit]
-    else:
-        waterings = Watered.objects.all()    
-    
-    serilizer = WateredSerializer(waterings, many=True)
-    return Response(serilizer.data)
+
+@api_view(['GET','POST'])
+def watering(request):
+    if request.method == 'GET':
+        return handle_get_watering(request)
+    elif request.method == 'POST':
+        return handle_post_watering(request)
+
 
 #get the last three waterings
 @api_view(['GET'])
-def get_watering(request, watering_id):
-    try:
-        waterings = Watered.objects.get(pk=watering_id) 
-        serilizer = WateredSerializer(waterings, many=False)
-    except ObjectDoesNotExist:
-        return HttpResponseNotFound("Watering with id: {} doesnt exist".format(watering_id), )
+def watering_by_id(request, watering_id):
+    return handle_get_watering_by_id(watering_id)
 
-    return Response(serilizer.data)
+
