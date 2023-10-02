@@ -33,6 +33,7 @@ def handle_get_watering_by_id(watering_id):
 def handle_post_watering(request):
     serializer = WateredSerializer(data=request.data)
     if serializer.is_valid():
+        # GPIO
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response(data={"details":"doesnt satisfy the data format"}, status=status.HTTP_400_BAD_REQUEST)
