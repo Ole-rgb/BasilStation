@@ -17,7 +17,7 @@ def handle_get_watering(request):
         waterings = Watered.objects.all()    
     
     serilizer = WateredSerializer(waterings, many=True)
-    return Response(serilizer.data)
+    return Response(serilizer.data, status=status.HTTP_200_OK)
 
 
 def handle_get_watering_by_id(watering_id):
@@ -27,11 +27,12 @@ def handle_get_watering_by_id(watering_id):
     except ObjectDoesNotExist:
         return Response(data={"details":"watering with id {} doesnt exist".format(watering_id)}, status=status.HTTP_404_NOT_FOUND )
     
-    return Response(serilizer.data)
+    return Response(serilizer.data, status=status.HTTP_200_OK)
 
 
 def handle_post_watering(request):
     serializer = WateredSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
     return Response(data={"details":"doesnt satisfy the data format"}, status=status.HTTP_400_BAD_REQUEST)

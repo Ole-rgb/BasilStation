@@ -21,6 +21,7 @@ def watering(request):
     if request.method == 'GET':
         return handle_get_watering(request)
     elif request.method == 'POST':
+        #TODO GPIO PUT 
         return handle_post_watering(request)
 
 

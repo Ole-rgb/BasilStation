@@ -12,5 +12,4 @@ class Watered(models.Model):
         return self.watered_date >= timezone.now() - datetime.timedelta(days=1)
     
     def __str__(self):
-        #return "Plant was watered at the {}, message:'{}', ".format(self.watered_date.date(), self.note_text)
         return "Plant with id: {}".format(self.id)
