@@ -8,9 +8,9 @@ def __setup():
 
 def pump(duration):
     __setup()
-    GPIO.output(16, True)
-    sleep(3)
-    GPIO.output(16, False)
+    GPIO.output(16, GPIO.HIGH)
+    sleep(duration)
+    GPIO.output(16, GPIO.LOW)
     __cleanup()
 
 def __cleanup():
