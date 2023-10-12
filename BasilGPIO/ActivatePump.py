@@ -4,7 +4,7 @@ from time import sleep
 
 def __setup():
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(16,GPIO.OUT)
+    GPIO.setup(16,GPIO.OUT,initial=GPIO.LOW)
 
 def pump(duration):
     __setup()
