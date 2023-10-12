@@ -4,7 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 from rest_framework.response import Response
 
-
+from BasilGPIO import ActivatePump as activate_pump
 from base.models import Watered
 from .serializers import WateredSerializer
 
@@ -34,6 +34,7 @@ def handle_post_watering(request):
     serializer = WateredSerializer(data=request.data)
     if serializer.is_valid():
         # GPIO
+        activate_pump.pump(2)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response(data={"details":"doesnt satisfy the data format"}, status=status.HTTP_400_BAD_REQUEST)

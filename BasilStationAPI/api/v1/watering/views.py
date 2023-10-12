@@ -7,7 +7,6 @@ from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework.decorators import api_view
 
-from BasilGPIO import ActivatePump as activate_pump
 from base.models import Watered
 from .serializers import WateredSerializer
 
@@ -22,8 +21,6 @@ def watering(request):
     if request.method == 'GET':
         return handle_get_watering(request)
     elif request.method == 'POST':
-        #TODO GPIO PUT 
-        activate_pump.pump(2)
         return handle_post_watering(request)
 
 
